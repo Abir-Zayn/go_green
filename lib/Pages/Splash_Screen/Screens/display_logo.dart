@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_green/Data/Models/service/img_resource.dart';
+import 'package:go_router/go_router.dart';
 
 class DisplayLogo extends StatefulWidget {
   const DisplayLogo({super.key});
@@ -17,12 +18,16 @@ class _DisplayLogoState extends State<DisplayLogo>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 1500),
+      duration: const Duration(milliseconds: 1500),
       vsync: this,
-    )..repeat(reverse: true);
+    )..forward().then((_) {
+        context.go('/onboarding');
+      });
+    //animation type has selected CurvedAnimation
+    // and curve has set easeInOut to have smoother transition
     _animation = CurvedAnimation(
       parent: _controller,
-      curve: Curves.easeInOut,
+      curve: Curves.easeInOutCubic,
     );
   }
 
@@ -30,7 +35,14 @@ class _DisplayLogoState extends State<DisplayLogo>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: ScaleTransition(scale: _animation, child: Text(R.appLogo)),
+        child: ScaleTransition(
+          scale: _animation,
+          child: Image.asset(
+            R.appLogo,
+            height: 200,
+            width: 200,
+          ),
+        ),
       ),
     );
   }

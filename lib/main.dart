@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: false,
       useInheritedMediaQuery: true,
-      builder: (_, child) {
+      builder: (_, Widget? child) {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: 'Go Green',

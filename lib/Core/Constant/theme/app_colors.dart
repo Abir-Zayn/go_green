@@ -10,6 +10,15 @@ class AppColors {
   static const Color primaryScaleColor2 = Color(0xFFD2F9EA);
   static const Color primaryScaleColor3 = Color(0xFF0A4A36);
 
+  //Splash Screen color
+  static const Color splash_outerBg = Color(0xFFd3f8e3);
+  static const Color splash_innerBg = Color(0xFFabefcd);
+  static const Color splash_inner_color = Color(0xFF3ccb90);
+
+  //Text color
+  static const Color primaryTextcolor = Color(0xFF050505);
+  static const Color secondaryTextcolor = Color(0xFF8E8E8E);
+
   // Additional Colors
   static const Color accent1 = Color(0xFFFFD636); // Yellow
   static const Color accent2 = Color(0xFF5AAAFA); // Blue

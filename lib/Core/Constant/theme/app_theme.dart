@@ -6,7 +6,7 @@ class AppTheme {
     return ThemeData(
       primarySwatch: AppColors.primarySwatch,
       primaryColor: AppColors.primary,
-      scaffoldBackgroundColor: Colors.white,
+      scaffoldBackgroundColor: Colors.grey[200],
 
       // Button Theme
       elevatedButtonTheme: ElevatedButtonThemeData(
