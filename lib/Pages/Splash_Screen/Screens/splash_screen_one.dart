@@ -57,20 +57,23 @@ class SplashScreenOne extends StatelessWidget {
               Positioned(
                 bottom: 100.h,
                 child: AppTextstyle(
-                    text: 'Welcome to Hapiway',
+                    text: 'Welcome to Go Green',
                     style: appStyle(
                         size: 24.sp,
                         color: AppColors.primaryTextcolor,
                         fontWeight: FontWeight.w600)),
               ),
               Positioned(
-                bottom: 70.h,
+                bottom: 50.h,
                 child: AppTextstyle(
-                  text: 'Your one stop solution for all your health needs',
+                  text:
+                      'Discover new places and visit them with us. \nLive like never before',
                   style: appStyle(
                       size: 16.sp,
                       color: AppColors.secondaryTextcolor,
                       fontWeight: FontWeight.w500),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
                 ),
               ),
             ],

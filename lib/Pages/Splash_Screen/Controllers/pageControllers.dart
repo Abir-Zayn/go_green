@@ -4,6 +4,7 @@ import 'package:go_green/Core/Constant/theme/app_colors.dart';
 import 'package:go_green/Pages/Splash_Screen/Screens/splash_screen_one.dart';
 import 'package:go_green/Pages/Splash_Screen/Screens/splash_screen_three.dart';
 import 'package:go_green/Pages/Splash_Screen/Screens/splash_screen_two.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Pagecontrollers extends StatefulWidget {
@@ -69,7 +70,7 @@ class _PagecontrollersState extends State<Pagecontrollers> {
                   ElevatedButton(
                     onPressed: () {
                       //navigate to the login page
-                      // Navigator.pushReplacementNamed(context, '/login');
+                      context.go('/login');
                     },
                     child: Padding(
                         padding: EdgeInsets.symmetric(

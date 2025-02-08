@@ -39,8 +39,8 @@ class _DisplayLogoState extends State<DisplayLogo>
           scale: _animation,
           child: Image.asset(
             R.appLogo,
-            height: 200,
-            width: 200,
+            height: 350,
+            width: 350,
           ),
         ),
       ),

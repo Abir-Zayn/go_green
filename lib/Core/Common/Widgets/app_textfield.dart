@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_green/Core/Constant/theme/app_colors.dart';
 
 class AppTextfield extends StatelessWidget {
   const AppTextfield({
@@ -50,7 +51,7 @@ class AppTextfield extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.blue, width: 1),
+          borderSide: const BorderSide(color: AppColors.primaryColor, width: 1),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),

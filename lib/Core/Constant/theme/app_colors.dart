@@ -18,6 +18,7 @@ class AppColors {
   //Text color
   static const Color primaryTextcolor = Color(0xFF050505);
   static const Color secondaryTextcolor = Color(0xFF8E8E8E);
+  static const Color whiteColor = Color.fromARGB(255, 244, 242, 242);
 
   // Additional Colors
   static const Color accent1 = Color(0xFFFFD636); // Yellow

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_green/Pages/Auth/views/sign_in_page.dart';
+import 'package:go_green/Pages/Auth/views/sign_up_page.dart';
 import 'package:go_green/Pages/Splash_Screen/Controllers/pageControllers.dart';
 import 'package:go_green/Pages/Splash_Screen/Screens/display_logo.dart';
 import 'package:go_green/Pages/Splash_Screen/Screens/splash_screen_one.dart';
@@ -22,6 +24,15 @@ final GoRouter _router = GoRouter(
           path: '/splashScreenOne',
           builder: (BuildContext context, GoRouterState state) =>
               const SplashScreenOne()),
+      GoRoute(
+          path: '/login',
+          builder: (BuildContext context, GoRouterState state) =>
+              const SignInPage()),
+      GoRoute(
+          path: '/signup',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SignUpPage();
+          }),
     ]);
 
 GoRouter get approuter => _router;
