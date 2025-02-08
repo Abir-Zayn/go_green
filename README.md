@@ -1,3 +1,3 @@
-Answer
-Go Green: Eco-Friendly Travel
-Book green hotels, plan sustainable trips with ease. Flutter, Bloc, Django backend customized with Jasmin. Reduce your impact, travel consciously!
+Go Green is a mobile application designed to simplify sustainable travel, empowering users to effortlessly book eco-certified hotels, plan personalized green holidays, and discover sustainable tours, minimizing their environmental impact.
+Built with Flutter, Go Green delivers a cross-platform experience on iOS and Android. Key packages include Shared Preferences for local data, Go_Router for navigation, Screen_Util for UI adaptation, and Flutter Hooks for stateful logic. Bloc architecture is the primary state management solution, ensuring a robust and scalable codebase.
+The server-side is powered by Django, providing a secure and scalable backend. The Django admin interface is customized with the Jasmin package, enhancing the administrator experience with a more visually appealing interface. Go Green leverages these technologies to promote sustainability and eco-conscious choices in travel.
