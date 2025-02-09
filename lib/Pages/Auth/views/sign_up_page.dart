@@ -17,6 +17,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
@@ -52,6 +53,20 @@ class _SignUpPageState extends State<SignUpPage> {
                     Ionicons.mail,
                     color: Colors.grey[350],
                   ),
+                  controller: _nameController,
+                  hintText: "Enter your name",
+                  keyboardType: TextInputType.name,
+                ),
+              ),
+
+              //Display the Sign in TextField
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                child: AppTextfield(
+                  suffixIcon: Icon(
+                    Ionicons.mail,
+                    color: Colors.grey[350],
+                  ),
                   controller: _emailController,
                   hintText: "Enter your Email",
                   keyboardType: TextInputType.emailAddress,
@@ -60,7 +75,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
               //Display the Password TextField
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
                 child: AppTextfield(
                   suffixIcon: Icon(
                     Ionicons.lock_closed,
@@ -68,7 +83,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   controller: _passwordController,
                   hintText: "Create a New Password",
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.visiblePassword,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter some text';
@@ -81,7 +96,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 child: AppTextfield(
                   suffixIcon: Icon(
                     Ionicons.lock_closed,
@@ -89,7 +104,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   controller: _confirmPasswordController,
                   hintText: "Re-Type your Password",
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.visiblePassword,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter some text';
@@ -105,22 +120,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
 
-              //Display the Forgot Password Text
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    AppTextstyle(
-                      text: "Forgot Password?",
-                      style: appStyle(
-                          size: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                ),
-              ),
               SizedBox(
                 height: 20.h,
               ),

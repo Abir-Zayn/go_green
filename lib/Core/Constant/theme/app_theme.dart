@@ -64,4 +64,68 @@ class AppTheme {
       ),
     );
   }
+
+  // Dark Theme
+  static ThemeData get darkTheme {
+    return ThemeData(
+      primarySwatch: AppColors.primarySwatch,
+      primaryColor: AppColors.primary,
+      scaffoldBackgroundColor: Colors.grey[900],
+
+      // Button Theme
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primaryColor,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      ),
+
+      // Text Button Theme
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: AppColors.primary,
+        ),
+      ),
+
+      // Outlined Button Theme
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: AppColors.primary,
+          side: const BorderSide(color: AppColors.primary),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      ),
+
+      // Color Scheme
+      colorScheme: ColorScheme.dark(
+        primary: AppColors.primary,
+        secondary: AppColors.secondary,
+        surface: Colors.grey[800]!,
+        error: AppColors.accent3,
+      ),
+
+      // Card Theme
+      cardTheme: CardTheme(
+        color: Colors.grey[800],
+        elevation: 2,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+
+      // App Bar Theme
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.primary,
+        elevation: 0,
+        centerTitle: true,
+      ),
+    );
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_green/Core/Common/Widgets/app_primary_btn.dart';
 import 'package:go_green/Core/Common/Widgets/app_style.dart';
@@ -6,6 +7,9 @@ import 'package:go_green/Core/Common/Widgets/app_textfield.dart';
 import 'package:go_green/Core/Common/Widgets/app_textstyle.dart';
 import 'package:go_green/Core/Constant/theme/app_colors.dart';
 import 'package:go_green/Data/Models/service/img_resource.dart';
+import 'package:go_green/Pages/Auth/Bloc/bloc_auth.dart';
+import 'package:go_green/Pages/Auth/Bloc/bloc_auth_event.dart';
+import 'package:go_green/Pages/Auth/Bloc/bloc_auth_states.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -23,8 +27,20 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
+        body: BlocConsumer<BlocAuth, BlocAuthStates>(
+      listener: (context, state) {
+        if (state is AuthError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+            ),
+          );
+        } else if (state is Authenticated) {
+          context.go('/home');
+        }
+      },
+      builder: (context, state) {
+        return Column(
           children: <Widget>[
             SizedBox(
               height: 60.h,
@@ -55,7 +71,7 @@ class _SignInPageState extends State<SignInPage> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               child: AppTextfield(
-                controller: _emailController,
+                controller: _passwordController,
                 hintText: "Password",
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
@@ -132,18 +148,26 @@ class _SignInPageState extends State<SignInPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Icon(
-                    Ionicons.logo_facebook,
-                    color: Colors.blue,
-                    size: 45,
+                  GestureDetector(
+                    onTap: () {},
+                    child: Icon(
+                      Ionicons.logo_facebook,
+                      color: Colors.blue,
+                      size: 45,
+                    ),
                   ),
                   SizedBox(
                     width: 30.w,
                   ),
-                  Icon(
-                    Ionicons.logo_google,
-                    color: Colors.red,
-                    size: 45,
+                  GestureDetector(
+                    onTap: () {
+                      context.read<BlocAuth>().add((GoogleSignInEvent()));
+                    },
+                    child: Icon(
+                      Ionicons.logo_google,
+                      color: Colors.red,
+                      size: 45,
+                    ),
                   ),
                 ],
               ),
@@ -177,8 +201,8 @@ class _SignInPageState extends State<SignInPage> {
               ],
             )
           ],
-        ),
-      ),
-    );
+        );
+      },
+    ));
   }
 }
