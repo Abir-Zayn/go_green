@@ -12,7 +12,7 @@ TextStyle appStyle({
   TextDecorationStyle? decorationStyle,
   double? decorationThickness,
 }) {
-  return GoogleFonts.poppins(
+  return GoogleFonts.atkinsonHyperlegible(
     fontSize: size,
     color: color,
     fontWeight: fontWeight,

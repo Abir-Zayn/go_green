@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_green/Core/Constant/utils/shared_pref.dart';
 import 'package:go_green/Data/Models/service/img_resource.dart';
 import 'package:go_router/go_router.dart';
 
@@ -21,7 +22,7 @@ class _DisplayLogoState extends State<DisplayLogo>
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     )..forward().then((_) {
-        context.go('/onboarding');
+        _checkAuthAndNavigate();
       });
     //animation type has selected CurvedAnimation
     // and curve has set easeInOut to have smoother transition
@@ -29,6 +30,17 @@ class _DisplayLogoState extends State<DisplayLogo>
       parent: _controller,
       curve: Curves.easeInOutCubic,
     );
+  }
+
+  Future<void> _checkAuthAndNavigate() async {
+    final prefManager = await SharedPrefManager.getInstance();
+
+    if (prefManager.isTokenValid()) {
+      context.go('/home');
+    } else {
+      await prefManager.clearSession();
+      context.go('/auth');
+    }
   }
 
   @override

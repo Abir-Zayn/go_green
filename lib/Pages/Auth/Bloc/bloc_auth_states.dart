@@ -1,27 +1,40 @@
-import 'package:appwrite/models.dart' as Models;
+import 'package:go_green/Data/Models/auth/user_model.dart';
 
-abstract class BlocAuthStates {}
+abstract class AuthState {}
 
-  //Initial state or default state
-  class AuthInitial extends BlocAuthStates{}
+class AuthInitial extends AuthState {}
 
-  // Loading state [a circular progress indicator can be shown when data is being fetched or update from the server/network]
-  class AuthLoading extends BlocAuthStates{}
+class AuthLoading extends AuthState {}
 
-  // Authenticated state [when the user is successfully authenticated]
-  class Authenticated extends BlocAuthStates{
-    final Models.User user;
-    Authenticated(this.user);
+class AuthAuthenticated extends AuthState {
+  final User user;
+  AuthAuthenticated(this.user);
+}
+
+class AuthError extends AuthState {
+  final String message;
+  final bool isRegError;
+
+  AuthError(this.message, {this.isRegError = false});
+
+  // Add this method to format the error message for display
+  String get formattedMessage {
+    return message
+        .replaceAll('Exception: ', '')
+        .replaceAll('[', '')
+        .replaceAll(']', '');
   }
+}
 
-  //Not Authenticated state [when the user is not authenticated]
-  class NotAuthenticated extends BlocAuthStates{}
+// Add this new state
+class AuthRegisteredButLoginFailed extends AuthState {
+  final String message;
+  final String email;
+  final String password;
 
-  //Error state [when an error occurs during the authentication process]
-  //Error state will show the error message whereas the success state
-  //will show you the user details
-  class AuthError extends BlocAuthStates{
-    final String message;
-    AuthError(this.message);
-  }
-
+  AuthRegisteredButLoginFailed(
+    this.message, {
+    required this.email,
+    required this.password,
+  });
+}

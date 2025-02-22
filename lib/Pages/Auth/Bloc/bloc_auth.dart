@@ -1,74 +1,63 @@
+// Bloc
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_green/Data/Models/service/appwrite_service.dart';
+import 'package:go_green/Core/Constant/utils/shared_pref.dart';
+import 'package:go_green/Pages/Auth/Controllers/Repository/api_service.dart';
 import 'package:go_green/Pages/Auth/Bloc/bloc_auth_event.dart';
 import 'package:go_green/Pages/Auth/Bloc/bloc_auth_states.dart';
 
-class BlocAuth extends Bloc<BlocAuthEvent, BlocAuthStates> {
-  final AppwriteService _appwriteService;
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  final AuthService _authService = AuthService();
 
-  //initial state
-  BlocAuth({required AppwriteService appwriteService})
-      : _appwriteService = appwriteService,
-        super(AuthInitial()) {
-    on<CheckAuthStatus>(_onCheckAuthStatus);
-    on<GoogleSignInEvent>(_onGoogleSignInEvent);
-    on<FacebookSignInEvent>(_onFacebookSignInEvent);
-    on<SignOutRequested>(_onSignOutRequested);
+  AuthBloc() : super(AuthInitial()) {
+    on<LoginEvent>(_onLoginEvent);
+    on<RegisterEvent>(_onRegisterEvent);
   }
 
-
-  //Event handlers [getting the current user if the user is authenticated]
-  Future<void> _onCheckAuthStatus(
-      CheckAuthStatus event, Emitter<BlocAuthStates> emit) async {
+  Future<void> _onLoginEvent(LoginEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
     try {
-      final user = await _appwriteService.getCurrentUser();
-      if (user != null) {
-        emit(Authenticated(user));
-      } else {
-        emit(NotAuthenticated());
-      }
+      final user = await _authService.login(event.email, event.password);
+      // Save user session
+      final prefManager = await SharedPrefManager.getInstance();
+      await prefManager.saveUserSession(user);
+      emit(AuthAuthenticated(user));
     } catch (e) {
       emit(AuthError(e.toString()));
     }
   }
 
-  //Event handlers [Google Sign in]
-  Future<void> _onGoogleSignInEvent(
-      GoogleSignInEvent event, Emitter<BlocAuthStates> emit) async {
+  Future<void> _onRegisterEvent(
+      RegisterEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
     try {
-      final user = await _appwriteService.signInWithGoogle();
-      if (user != null) {
-        emit(Authenticated(user));
+      // First try to register
+      final registered = await _authService.register(
+        email: event.email,
+        password: event.password,
+        username: event.username,
+        firstName: event.firstName,
+        lastName: event.lastName,
+        rePassword: event.repassword,
+      );
+
+      if (registered) {
+        // If registration successful, wait a bit before trying to login
+        await Future.delayed(const Duration(seconds: 1));
+        try {
+          // Then try to login
+          final user = await _authService.login(event.email, event.password);
+          emit(AuthAuthenticated(user));
+        } catch (loginError) {
+          // If login fails after successful registration
+          emit(AuthRegisteredButLoginFailed(
+            'Registration successful! Please try logging in.',
+            email: event.email,
+            password: event.password,
+          ));
+        }
       } else {
-        emit(NotAuthenticated());
+        emit(AuthError('Registration failed'));
       }
-    } catch (e) {
-      emit(AuthError(e.toString()));
-    }
-  }
-
-  //Event handlers [Facebook Sign in]
-  Future<void> _onFacebookSignInEvent(
-      FacebookSignInEvent event, Emitter<BlocAuthStates> emit) async {
-    try {
-      final user = await _appwriteService.signInWithGoogle();
-      if (user != null) {
-        emit(Authenticated(user));
-      } else {
-        emit(NotAuthenticated());
-      }
-    } catch (e) {
-      emit(AuthError(e.toString()));
-    }
-  }
-
-
-
-  Future<void> _onSignOutRequested(
-      SignOutRequested event, Emitter<BlocAuthStates> emit) async {
-    try {
-      await _appwriteService.SignOut();
-      emit(NotAuthenticated());
     } catch (e) {
       emit(AuthError(e.toString()));
     }

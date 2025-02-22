@@ -27,7 +27,7 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: BlocConsumer<BlocAuth, BlocAuthStates>(
+        body: BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthError) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -35,7 +35,7 @@ class _SignInPageState extends State<SignInPage> {
               content: Text(state.message),
             ),
           );
-        } else if (state is Authenticated) {
+        } else if (state is AuthAuthenticated) {
           context.go('/home');
         }
       },
@@ -109,7 +109,11 @@ class _SignInPageState extends State<SignInPage> {
                 fontSize: 18.sp,
                 padding: 170.w,
                 elevation: 1.0,
-                onPressed: () {}),
+                onPressed: () {
+                  context.read<AuthBloc>().add( LoginEvent (
+                      email: _emailController.text,
+                      password: _passwordController.text));
+                }),
 
             SizedBox(
               height: 20.h,
@@ -161,7 +165,7 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      context.read<BlocAuth>().add((GoogleSignInEvent()));
+                      // context.read<BlocAuth>().add((GoogleSignInEvent()));
                     },
                     child: Icon(
                       Ionicons.logo_google,
